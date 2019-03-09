@@ -133,6 +133,9 @@ package classes
 		public static const ColdFury:PerkType = mk("Cold Fury", "Cold Fury",
 				"Berserking halves your defense instead of reducing to zero.",
 				"You choose the 'Cold Fury' perk, causing Berserking to only reduce your armor by half instead of completely reducing to zero.");
+		public static const Coprophiliac:PerkType = mk("Coprophiliac", "Coprophiliac",
+				"You love poo. (Changes scat scenes)",
+				"You have grown to love poo.");
 		public static const CorruptedLibido:PerkType = mk("Corrupted Libido", "Corrupted Libido",
 				"Reduces lust gain by 10%.",
 				"You choose the 'Corrupted Libido' perk.  As a result of your body's corruption, you've become a bit harder to turn on. (Lust gain reduced by 10%!)");
@@ -145,6 +148,9 @@ package classes
 						"<b>You are stronger than double attack allows.  To choose between reduced strength double-attacks and a single strong attack, access \"Dbl Options\" in the perks menu.</b>" +
 						"]]",
 				"You choose the 'Double Attack' perk.  This allows you to make two attacks so long as your strength is at 60 or below.  By default your effective strength will be reduced to 60 if it is too high when double attacking.  <b>You can enter the perks menu at any time to toggle options as to how you will use this perk.</b>");
+		public static const EfficientDigestion:PerkType = mk("Efficient Digestion", "Efficient Digestion",
+				"Reduces bowel fullness gain by 50%. Mutually exclusive with 'Frequent Pooper' perk.",
+				"You choose the 'Efficient Digestion' perk, reducing the rate at which your bowels fill up.");
 		public static const Evade:PerkType = mk("Evade", "Evade",
 				"Increases chances of evading enemy attacks.",
 				"You choose the 'Evade' perk, allowing you to avoid enemy attacks more often!");
@@ -157,6 +163,9 @@ package classes
 		public static const FocusedMind:PerkType = mk("Focused Mind", "Focused Mind",
 				"Black Magic is less likely to backfire and White Magic threshold is increased.",
 				"You choose the 'Focused Mind' perk. Black Magic is less likely to backfire and White Magic threshold is increased.");
+		public static const FrequentPooper:PerkType = mk("Frequent Pooper", "Frequent Pooper",
+				"Increases bowel fullness gain by 100%.  Mutually exclusive with 'Efficient Digestion' perk.",
+				"You choose the 'Frequent Pooper' perk, increasing the rate at which your bowels fill up.");
 		public static const HoldWithBothHands:PerkType = mk("Hold With Both Hands", "Hold With Both Hands",
 				"Gain +20% strength modifier with melee weapons when not using a shield.",
 				"You choose the 'Hold With Both Hands' perk.  As long as you're wielding a melee weapon and you're not using a shield, you gain 20% strength modifier to damage.");
@@ -238,6 +247,9 @@ package classes
 		public static const Medicine:PerkType = mk("Medicine", "Medicine",
 				"Grants 15% chance per round of cleansing poisons/drugs from your body. Increases HP restoration on rest.",
 				"You choose the 'Medicine' perk, giving you a chance to remove debilitating poisons automatically! Also, increases HP restoration on rest.");
+		public static const NaturallySpaciousAnus:PerkType = mk("Naturally Spacious Anus", "Naturally Spacious Anus",
+				"Increases bowel capacity to 200, and enables different scat scenes when above 100 fullness, and hyper scenes when above 150 fullness.",
+				"You've chosen the 'Naturally Spacious Anus' perk, increasing maximum bowl capacity and enabling large and hyper scat scenes.");
 		public static const Nymphomania:PerkType = mk("Nymphomania", "Nymphomania",
 				"Raises minimum lust by up to 30.",
 				"You've chosen the 'Nymphomania' perk.  Due to the incredible amount of corruption you've been exposed to, you've begun to live in a state of minor constant arousal.  Your minimum lust will be increased by as much as 30 (If you already have minimum lust, the increase is 10-15).");
@@ -776,6 +788,22 @@ package classes
 			Survivalist2.requireLevel(12)
 						.requirePerk(Survivalist)
 						.requireHungerEnabled();
+			EfficientDigestion.requireLevel(12)
+							  .requireHungerEnabled()
+							  .requireCustomFunction(function ():Boolean {
+								  return kGAMECLASS.flags[kFLAGS.SCAT_ENABLED] != 0;
+						      }, "Scat enabled")
+							  .requireCustomFunction(function (player:Player):Boolean {
+								  return !player.hasPerk(FrequentPooper);
+							  }, "Does not have 'Frequent Pooper' perk");
+			FrequentPooper.requireLevel(12)
+						  .requireHungerEnabled()
+						  .requireCustomFunction(function ():Boolean {
+							  return kGAMECLASS.flags[kFLAGS.SCAT_ENABLED] != 0;
+						  }, "Scat enabled")
+						  .requireCustomFunction(function (player:Player):Boolean {
+							  return !player.hasPerk(EfficientDigestion);
+						  }, "Does not have 'Efficient Digestion' perk");
 			//Other Misc Perks
 			ImprovedVision.requireLevel(30)
 			          .requirePerk(Tactician);
@@ -783,6 +811,22 @@ package classes
 			          .requirePerk(ImprovedVision);
 			ImprovedVision3.requireLevel(90)
 			          .requirePerk(ImprovedVision2);
+			NaturallySpaciousAnus.requireLevel(24)
+								 .requireHungerEnabled()
+								 .requireCustomFunction(function ():Boolean {
+									 return kGAMECLASS.flags[kFLAGS.SCAT_ENABLED] != 0;
+								 }, "Scat enabled")
+								 .requireCustomFunction(function (player:Player):Boolean {
+									 return player.hasPerk(EfficientDigestion) || player.hasPerk(FrequentPooper);
+								 }, "Has either 'Efficient Digestion' perk or 'Frequent Pooper' perk");
+			Coprophiliac.requireLevel(18)
+						.requireHungerEnabled()
+						.requireCustomFunction(function ():Boolean {
+									 return kGAMECLASS.flags[kFLAGS.SCAT_ENABLED] != 0;
+								 }, "Scat enabled")
+						.requireCustomFunction(function ():Boolean {
+							return ((((kGAMECLASS.flags[kFLAGS.TIMES_POOPED_HYPER] + kGAMECLASS.flags[kFLAGS.TIMES_POOPED_COLOSSAL]) > 0) && ((kGAMECLASS.flags[kFLAGS.TIMES_POOPED_HYPER] + kGAMECLASS.flags[kFLAGS.TIMES_POOPED_COLOSSAL] + kGAMECLASS.flags[kFLAGS.TIMES_POOPED_HUGE]) > 1) && ((kGAMECLASS.flags[kFLAGS.TIMES_POOPED_HYPER] + kGAMECLASS.flags[kFLAGS.TIMES_POOPED_COLOSSAL] + kGAMECLASS.flags[kFLAGS.TIMES_POOPED_HUGE] + kGAMECLASS.flags[kFLAGS.TIMES_POOPED_LARGE]) > 2) && (kGAMECLASS.flags[kFLAGS.TIMES_POOPED] > 4)) || ((kGAMECLASS.flags[kFLAGS.TIMES_POOPED_MEDIUM] > 2) && (kGAMECLASS.flags[kFLAGS.TIMES_POOPED] > 7) && (kGAMECLASS.flags[kFLAGS.TIMES_POOPED_ACCIDENT] > 1)));
+						}, "Meet pooping requirements");
 		}
 		{
 			initRequirements();

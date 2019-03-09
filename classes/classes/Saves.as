@@ -639,6 +639,16 @@ public function savePermObject(isFile:Boolean):void {
 		saveFile.data.flags[kFLAGS.SILLY_MODE_ENABLE_FLAG] = flags[kFLAGS.SILLY_MODE_ENABLE_FLAG];
 		saveFile.data.flags[kFLAGS.PRISON_ENABLED] = flags[kFLAGS.PRISON_ENABLED];
 		saveFile.data.flags[kFLAGS.WATERSPORTS_ENABLED] = flags[kFLAGS.WATERSPORTS_ENABLED];
+		saveFile.data.flags[kFLAGS.SCAT_ENABLED] = flags[kFLAGS.SCAT_ENABLED];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED] = flags[kFLAGS.TIMES_POOPED];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_TINY] = flags[kFLAGS.TIMES_POOPED_TINY];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_SMALL] = flags[kFLAGS.TIMES_POOPED_SMALL];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_MEDIUM] = flags[kFLAGS.TIMES_POOPED_MEDIUM];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_LARGE] = flags[kFLAGS.TIMES_POOPED_LARGE];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_HUGE] = flags[kFLAGS.TIMES_POOPED_HUGE];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_COLOSSAL] = flags[kFLAGS.TIMES_POOPED_COLOSSAL];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_HYPER] = flags[kFLAGS.TIMES_POOPED_HYPER];
+		saveFile.data.flags[kFLAGS.TIMES_POOPED_ACCIDENT] = flags[kFLAGS.TIMES_POOPED_ACCIDENT];
 		saveFile.data.flags[kFLAGS.ADDICTIONS_ENABLED] = flags[kFLAGS.ADDICTIONS_ENABLED];
 
 		saveFile.data.flags[kFLAGS.USE_OLD_INTERFACE] = flags[kFLAGS.USE_OLD_INTERFACE];
@@ -697,6 +707,16 @@ public function loadPermObject():void {
 			if (saveFile.data.flags[kFLAGS.SILLY_MODE_ENABLE_FLAG] != undefined) flags[kFLAGS.SILLY_MODE_ENABLE_FLAG] = saveFile.data.flags[kFLAGS.SILLY_MODE_ENABLE_FLAG];
 			if (saveFile.data.flags[kFLAGS.PRISON_ENABLED] != undefined) flags[kFLAGS.PRISON_ENABLED] = saveFile.data.flags[kFLAGS.PRISON_ENABLED];
 			if (saveFile.data.flags[kFLAGS.WATERSPORTS_ENABLED] != undefined) flags[kFLAGS.WATERSPORTS_ENABLED] = saveFile.data.flags[kFLAGS.WATERSPORTS_ENABLED];
+			if (saveFile.data.flags[kFLAGS.SCAT_ENABLED] != undefined) flags[kFLAGS.SCAT_ENABLED] = saveFile.data.flags[kFLAGS.SCAT_ENABLED];
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED] != undefined) flags[kFLAGS.TIMES_POOPED] = saveFile.data.flags[kFLAGS.TIMES_POOPED]; else flags[kFLAGS.TIMES_POOPED] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_TINY] != undefined) flags[kFLAGS.TIMES_POOPED_TINY] = saveFile.data.flags[kFLAGS.TIMES_POOPED_TINY]; else flags[kFLAGS.TIMES_POOPED_TINY] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_SMALL] != undefined) flags[kFLAGS.TIMES_POOPED_SMALL] = saveFile.data.flags[kFLAGS.TIMES_POOPED_SMALL]; else flags[kFLAGS.TIMES_POOPED_SMALL] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_MEDIUM] != undefined) flags[kFLAGS.TIMES_POOPED_MEDIUM] = saveFile.data.flags[kFLAGS.TIMES_POOPED_MEDIUM]; else flags[kFLAGS.TIMES_POOPED_MEDIUM] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_LARGE] != undefined) flags[kFLAGS.TIMES_POOPED_LARGE] = saveFile.data.flags[kFLAGS.TIMES_POOPED_LARGE]; else flags[kFLAGS.TIMES_POOPED_LARGE] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_HUGE] != undefined) flags[kFLAGS.TIMES_POOPED_HUGE] = saveFile.data.flags[kFLAGS.TIMES_POOPED_HUGE]; else flags[kFLAGS.TIMES_POOPED_HUGE] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_COLOSSAL] != undefined) flags[kFLAGS.TIMES_POOPED_COLOSSAL] = saveFile.data.flags[kFLAGS.TIMES_POOPED_COLOSSAL]; else flags[kFLAGS.TIMES_POOPED_COLOSSAL] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_HYPER] != undefined) flags[kFLAGS.TIMES_POOPED_HYPER] = saveFile.data.flags[kFLAGS.TIMES_POOPED_HYPER]; else flags[kFLAGS.TIMES_POOPED_HYPER] = 0;
+			if (saveFile.data.flags[kFLAGS.TIMES_POOPED_ACCIDENT] != undefined) flags[kFLAGS.TIMES_POOPED_ACCIDENT] = saveFile.data.flags[kFLAGS.TIMES_POOPED_ACCIDENT]; else flags[kFLAGS.TIMES_POOPED_ACCIDENT] = 0;
 			if (saveFile.data.flags[kFLAGS.ADDICTIONS_ENABLED] != undefined)
 				flags[kFLAGS.ADDICTIONS_ENABLED] = saveFile.data.flags[kFLAGS.ADDICTIONS_ENABLED];
 			else
@@ -874,6 +894,7 @@ public function saveGameObject(slot:String, isFile:Boolean):void
 		saveFile.data.teaseXP = player.teaseXP;
 		//Prison STATS
 		saveFile.data.hunger = player.hunger;
+		saveFile.data.bowelFullness = player.bowelFullness;
 		saveFile.data.esteem = player.esteem;
 		saveFile.data.obey = player.obey;
 		saveFile.data.obeySoftCap = player.obeySoftCap;
@@ -1468,6 +1489,10 @@ public function loadGameObject(saveData:Object, slot:String = "VOID"):void
 			player.hunger = 50;
 		else
 			player.hunger = saveFile.data.hunger;
+		if (saveFile.data.bowelFullness == undefined)
+			player.bowelFullness = 0;
+		else
+			player.bowelFullness = saveFile.data.bowelFullness;
 		if (saveFile.data.esteem == undefined)
 			player.esteem = 50;
 		else

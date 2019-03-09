@@ -3005,5 +3005,15 @@ public static const ITS_EVERY_DAY:int                                           
 public static const LOW_STANDARDS_FOR_ALL:int                                       = 2997;
 public static const HYPER_HAPPY:int                                                 = 2998;
 public static const GRIMDARK_MODE:int                                               = 2999; // Grimdark CoC! Do you wanna have a bad time?
+public static const SCAT_ENABLED:int                                                = 3000; // 1 if scat scenes and bowel fullness mechanics are enabled.
+public static const TIMES_POOPED:int												= 3001; // Number of times you have pooped.
+public static const TIMES_POOPED_TINY:int											= 3002; // Tiny poops.
+public static const TIMES_POOPED_SMALL:int											= 3003; // Small poops.
+public static const TIMES_POOPED_MEDIUM:int											= 3004; // Medium poops.
+public static const TIMES_POOPED_LARGE:int											= 3005; // Large poops.
+public static const TIMES_POOPED_HUGE:int											= 3006; // Huge poops.
+public static const TIMES_POOPED_COLOSSAL:int										= 3007; // Colossal poops.
+public static const TIMES_POOPED_HYPER:int											= 3008; // Hyper poops.
+public static const TIMES_POOPED_ACCIDENT:int										= 3009; // Number of accidents.
 	}    
 }

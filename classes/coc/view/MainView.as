@@ -106,7 +106,7 @@ public class MainView extends Block {
 	public static const BTN_H:Number = 40;
 
 	public static const SCREEN_W:Number = 1000;
-	public static const SCREEN_H:Number = 800;
+	public static const SCREEN_H:Number = 828;
 
 	internal static const TOPROW_Y:Number       = 0;
 	internal static const TOPROW_H:Number       = 50;
@@ -114,7 +114,7 @@ public class MainView extends Block {
 
 	internal static const STATBAR_W:Number = 205;
 	internal static const STATBAR_Y:Number = TOPROW_Y + TOPROW_H;
-	internal static const STATBAR_H:Number = 600;
+	internal static const STATBAR_H:Number = 628;
 
 	/*
 	 // I'd like to have the position calculable, but the borders are part of the bg picture so have to use magic numbers
@@ -127,7 +127,7 @@ public class MainView extends Block {
 	internal static const TEXTZONE_Y:Number = 52; // top = const
 	internal static const TEXTZONE_W:Number = 769; // width = const
 	internal static const VSCROLLBAR_W:Number = 15;
-	internal static const TEXTZONE_H:Number = 602; // height = const
+	internal static const TEXTZONE_H:Number = 630; // height = const
 
 	internal static const SPRITE_W:Number = 80;
 	internal static const SPRITE_H:Number = 80;

@@ -104,6 +104,11 @@ import flash.ui.Keyboard;
 			} else {
 				mainView.statsView.toggleHungerBar(false);
 			}
+			if ((flags[kFLAGS.HUNGER_ENABLED] > 0) && (flags[kFLAGS.SCAT_ENABLED] != 0)) {
+				mainView.statsView.toggleBowelBar(true);
+			} else {
+				mainView.statsView.toggleBowelBar(false);
+			}
 			mainView.monsterStatsView.refreshStats(getGame());
 			mainView.statsView.refreshStats(getGame());
 			//Set theme!

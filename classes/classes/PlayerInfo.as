@@ -198,6 +198,38 @@ package classes
 				if (player.hunger100 >= 100) bodyStats += "<font color=\"#00C000\">Very full</font>";
 				bodyStats += ")\n";
 			}
+			
+			if (flags[kFLAGS.HUNGER_ENABLED] > 0 && flags[kFLAGS.SCAT_ENABLED] > 0)
+			{
+				bodyStats += "<b>Bowel Fullness:</b> " + player.bowelFullness + " / ";
+				if (player.findPerk(PerkLib.NaturallySpaciousAnus) >= 0) bodyStats += "200";
+				else bodyStats += "100";
+				if (player.findPerk(PerkLib.NaturallySpaciousAnus) >= 0)
+				{
+					if (player.bowelFullness < 30) bodyStats += " (<font color=\"#00C000\">Empty</font>)";
+					else if (player.bowelFullness < 60) bodyStats += " (<font color=\"#80C000\">Mostly Empty</font>)";
+					else if (player.bowelFullness < 90) bodyStats += " (<font color=\"#A0CC00\">Slightly Full</font>)";
+					else if (player.bowelFullness < 120) bodyStats += " (<font color=\"#FFCC00\">Somewhat Full</font>)";
+					else if (player.bowelFullness < 150) bodyStats += " (<font color=\"#F0A000\">Quite Full</font>)";
+					else if (player.bowelFullness < 180) bodyStats += " (<font color=\"#F08000\">Very Full</font>)";
+					else if (player.bowelFullness < 200) bodyStats += " (<font color=\"#FF0000\">Accident Imminent</font>)";
+					else if (player.bowelFullness == 200) bodyStats += " (<font color=\"#8000C0\">Accident in progress</font>)";
+					else bodyStats += " (Error in bowel fullness value)";
+				}
+				else
+				{
+					if (player.bowelFullness < 15) bodyStats += " (<font color=\"#00C000\">Empty</font>)";
+					else if (player.bowelFullness < 30) bodyStats += " (<font color=\"#80C000\">Mostly Empty</font>)";
+					else if (player.bowelFullness < 45) bodyStats += " (<font color=\"#A0CC00\">Slightly Full</font>)";
+					else if (player.bowelFullness < 60) bodyStats += " (<font color=\"#FFCC00\">Somewhat Full</font>)";
+					else if (player.bowelFullness < 75) bodyStats += " (<font color=\"#F0A000\">Quite Full</font>)";
+					else if (player.bowelFullness < 90) bodyStats += " (<font color=\"#F08000\">Very Full</font>)";
+					else if (player.bowelFullness < 100) bodyStats += " (<font color=\"#FF0000\">Accident Imminent</font>)";
+					else if (player.bowelFullness == 100) bodyStats += " (<font color=\"#8000C0\">Accident in progress</font>)";
+					else bodyStats += " (Error in bowel fullness value)";
+				}
+				bodyStats += "\n";
+			}
 
 			bodyStats += "<b>Anal Capacity:</b> " + Math.round(player.analCapacity()) + "\n";
 			bodyStats += "<b>Anal Looseness:</b> " + Math.round(player.ass.analLooseness) + "\n";
@@ -265,6 +297,20 @@ package classes
 					else
 						bodyStats += "<b>Slime Stored:</b> " + (17 - player.statusEffectv1(StatusEffects.SlimeCraving)) + " hours until you start losing strength.\n";
 				}
+			}
+			
+			if (flags[kFLAGS.SCAT_ENABLED] > 0)
+			{
+				bodyStats += "\n<b><u>Poop Stats</u></b>";
+				bodyStats += "\n<b>Hyper turds:</b> " + flags[kFLAGS.TIMES_POOPED_HYPER];
+				bodyStats += "\n<b>Colossal turds:</b> " + flags[kFLAGS.TIMES_POOPED_COLOSSAL];
+				bodyStats += "\n<b>Huge turds:</b> " + flags[kFLAGS.TIMES_POOPED_HUGE];
+				bodyStats += "\n<b>Large turds:</b> " + flags[kFLAGS.TIMES_POOPED_LARGE];
+				bodyStats += "\n<b>Medium turds:</b> " + flags[kFLAGS.TIMES_POOPED_MEDIUM];
+				bodyStats += "\n<b>Small turds:</b> " + flags[kFLAGS.TIMES_POOPED_SMALL];
+				bodyStats += "\n<b>Tiny turds:</b> " + flags[kFLAGS.TIMES_POOPED_TINY];
+				bodyStats += "\n<b>Total shits:</b> " + flags[kFLAGS.TIMES_POOPED];
+				bodyStats += "\n<b>Of which were accidents:</b> " + flags[kFLAGS.TIMES_POOPED_ACCIDENT] + "\n";
 			}
 			
 			if (bodyStats != "")

@@ -1076,7 +1076,7 @@ private function campActions():void {
 	menu();
 	clearOutput();
 	outputText(images.showImage("camp-campfire"));
-	outputText("What would you like to do?")
+	outputText("What would you like to do?");
 	addButton(0, "SwimInStream", swimInStream).hint("Swim in stream and relax to pass time.", "Swim In Stream");
 	addButton(1, "ExaminePortal", examinePortal).hint("Examine the portal. This scene is placeholder.", "Examine Portal"); //Examine portal
 	if (getGame().time.hours == 19) addButton(2, "Watch Sunset", watchSunset).hint("Watch the sunset and relax."); //Relax and watch at the sunset
@@ -1090,8 +1090,11 @@ private function campActions():void {
 	if (player.hasKeyItem("Carpenter's Toolbox") >= 0 && flags[kFLAGS.CAMP_WALL_PROGRESS] >= 100 && flags[kFLAGS.CAMP_WALL_GATE] <= 0) addButton(5, "Build Gate", buildCampGatePrompt).hint("Build a gate to complete your camp defense.");
 	if (flags[kFLAGS.CAMP_WALL_PROGRESS] >= 100 && player.hasItem(useables.IMPSKLL, 1)) addButton(6, "AddImpSkull", promptHangImpSkull).hint("Add an imp skull to decorate the wall and to serve as deterrent for imps.", "Add Imp Skull");
 	if (flags[kFLAGS.LETHICE_DEFEATED] > 0) addButton(7, "Ascension", promptAscend).hint("Perform an ascension? This will restart your adventures with your levels, items, and gems carried over. The game will also get harder.");
+	if (flags[kFLAGS.SCAT_ENABLED] > 0) addButton(9, "Relieve Self", relieveSelfInCamp).hint("Take a dump.").disableIf(player.bowelFullness <= 30, "You don't need to poo right now.");
 	addButton(14, "Back", playerMenu);
+	addButton(8,"magic",giveBF);//
 }
+private function giveBF():void{player.bowelFullness+=10;}//
 
 private function swimInStream():void {
 	var izmaJoinsStream:Boolean = false;
@@ -1145,6 +1148,12 @@ private function swimInStream():void {
 		doYesNo(swimInStreamPrank1, swimInStreamFinish); //Pranks!
 		return;
 	}
+	if ((player.findPerk(PerkLib.Coprophiliac) >= 0) && !(player.bowelFullness <= 30))
+	{
+		outputText("\n\nYou feel an object sitting in your rectum that you could push out if you tried. Do you?");
+		doYesNo(swimInStreamPoo, swimInStreamFinish);
+		return;
+	}
 	else {
 		doNext(swimInStreamFinish);
 	}
@@ -1181,8 +1190,64 @@ private function swimInStreamPrank1():void {
 	doNext(swimInStreamFinish);
 }
 
+private function swimInStreamPoo():void {
+	clearOutput();
+	outputText("You start to push " + pushStrength(player.bowelFullness) + " as the tip of a turd begins to emerge. ");
+	if (player.armorName == "slutty swimwear")
+	{
+		if (player.bowelFullness > 175) { outputText("");  flags[kFLAGS.TIMES_POOPED_HYPER] += 1; }
+		else if (player.bowelFullness > 150) { outputText("");  flags[kFLAGS.TIMES_POOPED_COLOSSAL] += 1; }
+		else if (player.bowelFullness > 125) { outputText("");  flags[kFLAGS.TIMES_POOPED_HUGE] += 1; }
+		else if (player.bowelFullness > 100) { outputText("");  flags[kFLAGS.TIMES_POOPED_LARGE] += 1; }
+		else if (player.bowelFullness > 75) { outputText("An average sized poo makes its way out your " + player.assholeDescript() + " and hugs your bum tightly in your slutty swimwear, making a noticeable bulge.");  flags[kFLAGS.TIMES_POOPED_MEDIUM] += 1; }
+		else if (player.bowelFullness > 50) { outputText("A smallish turd is pushed out your " + player.assholeDescript() + " and nestles your bum in your slutty swimwear.");  flags[kFLAGS.TIMES_POOPED_SMALL] += 1; }
+		else { outputText("A cute petite thing exits your " + player.assholeDescript() + " and nuzzles your bum in your slutty swimwear.");  flags[kFLAGS.TIMES_POOPED_TINY] += 1; }
+		outputText(" You masturbate with your poo in your swimwear.");
+		outputText("\n\nYou clean out your slutty swimwear from the poo.");
+		player.orgasm();
+	}
+	else
+	{
+		if (player.bowelFullness > 175) { outputText("A truly massive chocolate log is slowly born from your backside. If you wish, you could bend over and take a bite out of it. Do you?");  flags[kFLAGS.TIMES_POOPED_HYPER] += 1; doYesNo(takeBite, swimInStreamFinish); return; }
+		else if (player.bowelFullness > 150) { outputText("A colossal log steadily exits your rear, barely pushed by the current. If you wish, you could bend over and take a bite of it. Do you?");  flags[kFLAGS.TIMES_POOPED_COLOSSAL] += 1; doYesNo(takeBite, swimInStreamFinish); return; }
+		else if (player.bowelFullness > 125) { outputText("A very big turd is expelled from your " + player.assholeDescript() + stuffVagChoice());  flags[kFLAGS.TIMES_POOPED_HUGE] += 1; doYesNo(stuffVag, swimInStreamFinish); return; }
+		else if (player.bowelFullness > 100) { outputText("A large poo is pushed free of your " + player.assholeDescript() + stuffVagChoice());  flags[kFLAGS.TIMES_POOPED_LARGE] += 1; doYesNo(stuffVag, swimInStreamFinish); return; }
+		else if (player.bowelFullness > 75) { outputText("An average sized poo makes its way out your " + player.assholeDescript() + " and is slowly pulled downstream by the current.");  flags[kFLAGS.TIMES_POOPED_MEDIUM] += 1; }
+		else if (player.bowelFullness > 50) { outputText("A smallish turd is pushed out your " + player.assholeDescript() + " and floats away.");  flags[kFLAGS.TIMES_POOPED_SMALL] += 1; }
+		else { outputText("A tiny shameful thing exits your " + player.assholeDescript() + " and slowly floats away.");  flags[kFLAGS.TIMES_POOPED_TINY] += 1; }
+	}
+	flags[kFLAGS.TIMES_POOPED] += 1;
+	player.bowelFullness = 0;
+	doNext(swimInStreamFinish);
+}
+private function pushStrength(bowelFullness:Number):String {
+	if (bowelFullness > 175) { return "very hard"; }
+	if (bowelFullness > 125) { return "hard"; }
+	if (bowelFullness > 75) { return "firmly"; }
+	return "gently";
+}
+private function stuffVagChoice():String {
+	if (player.hasVagina())
+		return ". You could catch it and try stuffing as much as you can in your " + player.vaginaDescript() + ". Do you?";
+	return ".";
+}
+private function stuffVag():void {
+	outputText("\n\nYou catch your poo and shove the firmer end into your " + player.vaginaDescript() + ". The size of it feels like a large dick, bringing you to a toe-curling orgasm rapidly. After cumming, you remove the turd and clean out your vagina.");
+	player.orgasm();
+	flags[kFLAGS.TIMES_POOPED] += 1;
+	player.bowelFullness = 0;
+	doNext(swimInStreamFinish);
+}
+private function takeBite():void {
+	outputText("\n\nYou guide the poo around to your front and upwards while its still connected to your rectum, then, bending over, take a large bite out of your shit, chew slowly, and swallow.");
+	player.refillHunger(10);
+	flags[kFLAGS.TIMES_POOPED] += 1;
+	player.bowelFullness = 0;
+	doNext(swimInStreamFinish);
+}
+
 private function swimInStreamFap():void {
-	clearOutput()
+	clearOutput();
 	doNext(swimInStreamFinish);
 }
 
@@ -1277,6 +1342,46 @@ private function watchStars():void {
 	outputText("\n\nYou let your mind wander and relax.");
 	dynStats("lus", -15, "scale", false);
 	doNext(camp.returnToCampUseOneHour);
+}
+
+private function relieveSelfInCamp():void {
+	clearOutput();
+	if (player.findPerk(PerkLib.Coprophiliac) >= 0)
+	{
+		
+	}
+	else
+	{
+		outputText("You pick out a secluded location near your " + homeDesc() + stripForPoo() + " Squatting, you begin to strain.\n\n");
+		if (player.bowelFullness > 175) { outputText("You strain for a quarter of an hour before anything emerges, and when it does, it's so wide that it painfully stretches your " + player.assholeDescript() + " so that it is gaping wide. Because of the urgent need to expel this monster, you are unable to move to a new position and fall backwards. Your poo continues to emerge from your anus unabated, as the smell of it overwhelms you."); flags[kFLAGS.TIMES_POOPED_HYPER] += 1; } // Hyper poo
+		else if (player.bowelFullness > 150) { outputText("Straining for several minutes, you are rewarded with a truly colossal shit, one that is large enough that you have to move twice before you are done excreting this monster, resulting in three neat, large piles of steaming shit. The smell it makes is really bad, enough so that you opt to skip redressing."); flags[kFLAGS.TIMES_POOPED_COLOSSAL] += 1; } // Colossal poo
+		else if (player.bowelFullness > 125) { outputText("You strain for a few minutes before a fat brown log appears from your backside, stretching your " + player.assholeDescript() + " pretty wide. It stinks greatly, and about halfway through expelling it, you are forced to move forward to avoid getting poo on your backside."); flags[kFLAGS.TIMES_POOPED_HUGE] += 1; } // Huge poo
+		else if (player.bowelFullness > 100) { outputText("Your straining rewards you with a large poo that coils around on the grass. It produces quite the stink."); flags[kFLAGS.TIMES_POOPED_LARGE] += 1; } // Large poo
+		else if (player.bowelFullness > 75) { outputText("Your straining produces a regular sized chocolate brownie that smells a bit."); flags[kFLAGS.TIMES_POOPED_MEDIUM] += 1; } // Regular poo
+		else if (player.bowelFullness > 50) { outputText("You push out a smallish log that lands softly in the grass below you."); flags[kFLAGS.TIMES_POOPED_SMALL] += 1; } // Small poo
+		else { outputText("You squeeze out a tiny, petite turd. Nothing to be proud of."); flags[kFLAGS.TIMES_POOPED_TINY] += 1; } // Tiny poo
+		if (!(player.bowelFullness > 175)) { outputText("\n\nYou finish up, using nearby leaves for toilet paper."); } // Skip wiping if poo is hyper
+		else { outputText("\n\nThe smell was so horrid it leaves you semi-delirious, and you forget to wipe."); }
+		if (!(player.bowelFullness > 150)) { outputText(redress()); } // Skip redressing is poo is colossal or hyper
+		else { outputText("\n\nYou gather your clothes and rush back to your " + homeDesc() + "."); }
+	}
+	flags[kFLAGS.TIMES_POOPED] += 1;
+	player.bowelFullness = 0;
+	doNext(camp.returnToCampUseOneHour);
+}
+private function stripForPoo():String {
+	if (player.armorName == "gear")
+		return ".";
+	if (player.armorName == player.lowerGarmentName || player.lowerGarmentName == UndergarmentLib.NOTHING.name)
+		return " and proceed to strip your " + player.armorName + ".";
+	return " and proceed to strip your " + player.armorName + " and " + player.lowerGarmentName + ".";
+}
+private function redress():String {
+	if (player.armorName == "gear")
+		return "";
+	if (player.armorName == player.lowerGarmentName || player.lowerGarmentName == UndergarmentLib.NOTHING.name)
+		return "\n\nYou replace your " + player.armorName + ".";
+	return "\n\nYou replace your " + player.lowerGarmentName + " and then re-equip your " + player.armorName + ".";
 }
 //----------------- REST -----------------
 public function rest():void {

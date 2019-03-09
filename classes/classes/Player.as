@@ -78,6 +78,9 @@ package classes
 		
 		public var obeySoftCap:Boolean = true;
 		
+		//Used when scat fetish is turned on
+		public var bowelFullness:Number = 0;
+		
 		//Perks used to store 'queued' perk buys
 		public var perkPoints:Number = 0;
 		public var statPoints:Number = 0;

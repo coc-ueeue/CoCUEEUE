@@ -222,7 +222,7 @@ package classes
 			var	oldStatName:String;
 			var allStats:Array;
 
-			allStats = ["str", "tou", "spe", "inte", "lib", "sens", "cor", "HP", "lust", "fatigue", "hunger"];
+			allStats = ["str", "tou", "spe", "inte", "lib", "sens", "cor", "HP", "lust", "fatigue", "hunger", "bowelFullness"];
 
 			for each(statName in allStats) {
 				oldStatName = _oldStatNameFor(statName);
@@ -419,6 +419,7 @@ package classes
 			kGAMECLASS.oldStats.oldLust = 0;
 			kGAMECLASS.oldStats.oldFatigue = 0;
 			kGAMECLASS.oldStats.oldHunger = 0;
+			kGAMECLASS.oldStats.oldBowelFullness = 0;
 		}
 	}
 }

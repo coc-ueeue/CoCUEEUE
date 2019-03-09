@@ -111,7 +111,7 @@ package classes
 	// Add in descriptions for the include statements. Many of the description text code is inside of these.
 	// Suggest moving or removing old comments referencing things that aren't needed anymore.
 	
-	[SWF(width = "1000", height = "800", backgroundColor = "0x000000", pageTitle = "Corruption of Champions")]
+	[SWF(width = "1000", height = "828", backgroundColor = "0x000000", pageTitle = "Corruption of Champions")]
 	
 	public class CoC extends MovieClip implements GuiInput
 	{
@@ -665,6 +665,7 @@ package classes
 			oldStats.oldLust = 0;
 			oldStats.oldFatigue = 0;
 			oldStats.oldHunger = 0;
+			oldStats.oldBowelFullness = 0;
 			
 			//model.maxHP = maxHP;
 			

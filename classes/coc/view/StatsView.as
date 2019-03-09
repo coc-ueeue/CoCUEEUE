@@ -3,6 +3,7 @@ import classes.CoC;
 import classes.GlobalFlags.kFLAGS;
 import classes.GlobalFlags.kGAMECLASS;
 import classes.Player;
+import classes.*;
 import classes.internals.LoggerFactory;
 import classes.internals.Utils;
 import flash.events.TimerEvent;
@@ -55,6 +56,7 @@ public class StatsView extends Block {
 	private var soulforceBar:StatBar;
 	*/
 	private var hungerBar:StatBar;
+	private var bowelBar:StatBar;
 	private var esteemBar:StatBar;
 	private var willBar:StatBar;
 	private var obeyBar:StatBar;
@@ -154,6 +156,10 @@ public class StatsView extends Block {
 		*/
 		addElement(hungerBar = new StatBar({
 			statName: "Satiety:",
+			showMax : true
+		}));
+		addElement(bowelBar = new StatBar({
+			statName: "Bowel Fullness:",
 			showMax : true
 		}));
 		addElement(esteemBar = new StatBar({
@@ -269,6 +275,8 @@ public class StatsView extends Block {
 			*/
 			case 'hunger':
 				return hungerBar;
+			case 'bowelfullness':
+				return bowelBar;
 			case 'level':
 				return levelBar;
 			case 'xp':
@@ -302,6 +310,10 @@ public class StatsView extends Block {
 	}
 	public function toggleHungerBar(show:Boolean):void {
 		hungerBar.visible = show;
+		invalidateLayout();
+	}
+	public function toggleBowelBar(show:Boolean):void {
+		bowelBar.visible = show;
 		invalidateLayout();
 	}
 	public function refreshStats(game:CoC):void {
@@ -345,6 +357,8 @@ public class StatsView extends Block {
 		*/
 		hungerBar.maxValue    = player.maxHunger();
 		hungerBar.value       = player.hunger;
+		bowelBar.maxValue     = getMaxBowel(player);
+		bowelBar.value        = player.bowelFullness;
 		var inPrison:Boolean          = game.prison.inPrison;
 		esteemBar.visible     		  = inPrison;
 		willBar.visible      		  = inPrison;
@@ -396,6 +410,13 @@ public class StatsView extends Block {
 						"\nTime: " + hrs + ":" + minutesDisplay + ampm;
 
 		invalidateLayout();
+	}
+	
+	public function getMaxBowel(player:Player):Number {
+		if (player.findPerk(PerkLib.NaturallySpaciousAnus) >= 0)
+			return 200;
+		else
+			return 100;
 	}
 
 	public function setBackground(bitmapClass:Class):void {
