@@ -249,7 +249,7 @@ package classes
 				"You choose the 'Medicine' perk, giving you a chance to remove debilitating poisons automatically! Also, increases HP restoration on rest.");
 		public static const NaturallySpaciousAnus:PerkType = mk("Naturally Spacious Anus", "Naturally Spacious Anus",
 				"Increases bowel capacity to 200, and enables different scat scenes when above 100 fullness, and hyper scenes when above 150 fullness.",
-				"You've chosen the 'Naturally Spacious Anus' perk, increasing maximum bowl capacity and enabling large and hyper scat scenes.");
+				"You've chosen the 'Naturally Spacious Anus' perk, increasing maximum bowel capacity and enabling large and hyper scat scenes.");
 		public static const Nymphomania:PerkType = mk("Nymphomania", "Nymphomania",
 				"Raises minimum lust by up to 30.",
 				"You've chosen the 'Nymphomania' perk.  Due to the incredible amount of corruption you've been exposed to, you've begun to live in a state of minor constant arousal.  Your minimum lust will be increased by as much as 30 (If you already have minimum lust, the increase is 10-15).");
